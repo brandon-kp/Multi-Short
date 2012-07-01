@@ -95,6 +95,16 @@ class Multishort
         }
     }
 
+    public function snipr_com($url='http://brandonkprobst.com')
+    {
+        $snipr_com = file_get_contents('http://snipr.com/site/snip?link='.$url);
+
+        if(preg_match_all("/(<)(div)( )(class)(=)(\"cbutton\")( )(val).(=)(\")((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $snipr_com, $matches))
+        {
+            $this->short_urls[] = $matches[11][0];
+        }        
+    }
+
     public function main()
     {
         if(count($_POST) < 1)
@@ -111,6 +121,7 @@ class Multishort
             //$this->to_ly();
             //$this->url_ie();
             //$this->moourl_com();
+            //$this->snipr_com();
             return $this->show_form = FALSE;
         }
     }
@@ -129,4 +140,3 @@ $multishort = new Multishort();
             echo "SHOW URLS";
       endif;
 ?>
-
