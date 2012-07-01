@@ -58,13 +58,21 @@ class Multishort
     {
         $alturl_com = file_get_contents('http://shorturl.com/make_url.php?longurl='.$url);
 
-        if (preg_match_all ("/(\[)(<)(a)( )(href)(=)((?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s\"]*))/is", $txt, $matches))
+        if(preg_match_all("/(\[)(<)(a)( )(href)(=)((?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s\"]*))/is", $alturl_com, $matches))
         {
             $this->short_urls[] = $matches[7][0];
         }        
     }
 
-    public function xr_com(){}
+    public function xr_com($url='http://brandonkprobst.com')
+    {
+        $xr_com = file_get_contents('http://xr.com/index.php?action=shortenurl&customize=0&createit=1&link='.$url);
+
+        if(preg_match_all("/()(<)(A)( )(HREF)(=)(\")((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $xr_com, $matches))
+        {
+            $this->short_urls[] = $matches[8][0];
+        }        
+    }
 
     public function yep_it(){}
 
@@ -88,6 +96,7 @@ class Multishort
             //$this->is_gd();
             //$this->xrl_us();
             //$this->alturl_com();
+            //$this->xr_com();
             return $this->show_form = FALSE;
         }
     }
