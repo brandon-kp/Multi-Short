@@ -54,7 +54,15 @@ class Multishort
         $this->short_urls[] = $xrl_us;
     }
 
-    public function alturl_com(){}
+    public function alturl_com($url='http://brandonkprobst.com')
+    {
+        $alturl_com = file_get_contents('http://shorturl.com/make_url.php?longurl='.$url);
+
+        if (preg_match_all ("/(\[)(<)(a)( )(href)(=)((?:http|https)(?::\/{2}[\w]+)(?:[\/|\.]?)(?:[^\s\"]*))/is", $txt, $matches))
+        {
+            $this->short_urls[] = $matches[7][0];
+        }        
+    }
 
     public function xr_com(){}
 
@@ -79,6 +87,7 @@ class Multishort
             //$this->tiny_cc();
             //$this->is_gd();
             //$this->xrl_us();
+            //$this->alturl_com();
             return $this->show_form = FALSE;
         }
     }
