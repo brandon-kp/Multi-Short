@@ -83,9 +83,12 @@ class Multishort
         $this->short_urls[] = $to_ly;
     }
 
-    public function fong_us(){}
+    public function url_ie($url='http://brandonkprobst.com')
+    {
+        $url_ie = file_get_contents('http://url.ie/site/api/tinyurl/create/?url='.$url);
 
-    public function url_ie(){}
+        $this->short_urls[] = $url_ie;
+    }
 
     public function moourl_com(){}
 
@@ -103,6 +106,7 @@ class Multishort
             //$this->alturl_com();
             //$this->xr_com();
             //$this->to_ly();
+            //$this->url_ie();
             return $this->show_form = FALSE;
         }
     }
