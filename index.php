@@ -99,10 +99,19 @@ class Multishort
     {
         $snipr_com = file_get_contents('http://snipr.com/site/snip?link='.$url);
 
-        if(preg_match_all("/(<)(div)( )(class)(=)(\"cbutton\")( )(val).(=)(\")((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $snipr_com, $matches))
+        if(preg_match_all("/(<)(div)( )(class)(=)(\"cbutton\")( )(val)(=)(\")((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $snipr_com, $matches))
         {
             $this->short_urls[] = $matches[11][0];
         }        
+    }
+
+    public function fon_gs($url='http://brandonkprobst.com')
+    {
+        $fon_gs  = file_get_contents('http://fon.gs/create.php?url='.$url);
+        $replace = array('OK:','MODIFIED:','AVAILABLE','TAKEN:');
+        $fon_gs  = str_replace($replace,'',$fon_gs);
+
+        $this->short_urls[] = $fon_gs;
     }
 
     public function main()
@@ -113,15 +122,19 @@ class Multishort
         }
         else
         {
-            //$this->tiny_cc();
-            //$this->is_gd();
-            //$this->xrl_us();
-            //$this->alturl_com();
-            //$this->xr_com();
-            //$this->to_ly();
-            //$this->url_ie();
-            //$this->moourl_com();
-            //$this->snipr_com();
+            $long_url = $_POST['uri'];
+
+            $this->tiny_cc($long_url);
+            $this->is_gd($long_url);
+            $this->xrl_us($long_url);
+            $this->alturl_com($long_url);
+            $this->xr_com($long_url);
+            $this->to_ly($long_url);
+            $this->url_ie($long_url);
+            $this->moourl_com($long_url);
+            $this->snipr_com($long_url);
+            $this->fon_gs($long_url);
+
             return $this->show_form = FALSE;
         }
     }
@@ -137,6 +150,8 @@ $multishort = new Multishort();
         </div>
     </form>
 <?php elseif($multishort->show_form == FALSE):
-            echo "SHOW URLS";
+            foreach($multishort->short_urls as $short_url):
+                echo $short_url.'<br />';
+            endforeach;
       endif;
 ?>
