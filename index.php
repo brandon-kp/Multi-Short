@@ -76,7 +76,12 @@ class Multishort
 
     public function yep_it(){}
 
-    public function to_ly(){}
+    public function to_ly($url='http://brandonkprobst.com')
+    {
+        $to_ly = file_get_contents('http://to.ly/api.php?longurl='.$url);
+
+        $this->short_urls[] = $to_ly;
+    }
 
     public function fong_us(){}
 
@@ -97,6 +102,7 @@ class Multishort
             //$this->xrl_us();
             //$this->alturl_com();
             //$this->xr_com();
+            //$this->to_ly();
             return $this->show_form = FALSE;
         }
     }
