@@ -27,7 +27,6 @@ class Multishort
     * domain_tld
     * Maintain this.
     */
-    public function bit_ly(){}
 
     public function tiny_cc($url='http://brandonkprobst.com')
     {
@@ -44,8 +43,6 @@ class Multishort
 
         $this->short_urls[] = $is_gd;
     }
-
-    public function su_pr(){}
 
     public function xrl_us($url='http://brandonkprobst.com')
     {
@@ -74,8 +71,6 @@ class Multishort
         }        
     }
 
-    public function yep_it(){}
-
     public function to_ly($url='http://brandonkprobst.com')
     {
         $to_ly = file_get_contents('http://to.ly/api.php?longurl='.$url);
@@ -90,7 +85,15 @@ class Multishort
         $this->short_urls[] = $url_ie;
     }
 
-    public function moourl_com(){}
+    public function moourl_com($url='http://brandonkprobst.com')
+    {
+        $moourl_com = file_get_contents('http://moourl.com/create/?source='.$url);
+
+        if (preg_match_all("/(<div id=\"milked_url\" style=\"display:none;\">)((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $moourl_com, $matches))
+        {
+            $this->short_urls[] = $matches[2][0];
+        }
+    }
 
     public function main()
     {
@@ -107,6 +110,7 @@ class Multishort
             //$this->xr_com();
             //$this->to_ly();
             //$this->url_ie();
+            //$this->moourl_com();
             return $this->show_form = FALSE;
         }
     }
