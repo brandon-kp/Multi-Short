@@ -101,6 +101,14 @@ class Multishort
         $this->short_urls[] = $ze_tl->url;
     }
 
+    public function tinyy_me($url='http://brandonkprobst.com')
+    {
+        $url = 'http://reddit.com';
+        $tinyy_me = file_get_contents('http://tinyy.me/api.php?url='.$url);
+
+        $this->short_urls[] = $tinyy_me;
+    }
+
     public function main()
     {
         if(count($_POST) < 1)
@@ -118,7 +126,8 @@ class Multishort
             //$this->url_ie($long_url);
             //$this->moourl_com($long_url);
             //$this->snipr_com($long_url);
-            $this->ze_tl();
+            //$this->ze_tl($long_url);
+            //$this->tinyy_me($long_url);
 
             return $this->show_form = FALSE;
         }
