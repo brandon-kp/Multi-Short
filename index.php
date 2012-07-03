@@ -1,5 +1,9 @@
 <?php
-
+/*
+*   xr.com - Unreliable. Goes down a lot.
+*   xrl.us - Marked as spam on Twitter
+*   fong.us - Manually approves links.
+*/
 class Multishort
 {
     /*
@@ -44,13 +48,6 @@ class Multishort
         $this->short_urls[] = $is_gd;
     }
 
-    public function xrl_us($url='http://brandonkprobst.com')
-    {
-        $xrl_us = file_get_contents('http://metamark.net/api/rest/simple?long_url='.$url);
-        
-        $this->short_urls[] = $xrl_us;
-    }
-
     public function alturl_com($url='http://brandonkprobst.com')
     {
         $alturl_com = file_get_contents('http://shorturl.com/make_url.php?longurl='.$url);
@@ -61,15 +58,6 @@ class Multishort
         }        
     }
 
-    public function xr_com($url='http://brandonkprobst.com')
-    {
-        $xr_com = file_get_contents('http://xr.com/index.php?action=shortenurl&customize=0&createit=1&link='.$url);
-
-        if(preg_match_all("/()(<)(A)( )(HREF)(=)(\")((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $xr_com, $matches))
-        {
-            $this->short_urls[] = $matches[8][0];
-        }        
-    }
 
     public function to_ly($url='http://brandonkprobst.com')
     {
@@ -105,13 +93,12 @@ class Multishort
         }        
     }
 
-    public function fon_gs($url='http://brandonkprobst.com')
+    public function ze_tl($url='http://brandonkprobst.com')
     {
-        $fon_gs  = file_get_contents('http://fon.gs/create.php?url='.$url);
-        $replace = array('OK:','MODIFIED:','AVAILABLE','TAKEN:');
-        $fon_gs  = str_replace($replace,'',$fon_gs);
+        $ze_tl = file_get_contents('http://ze.tl/?url='.$url);
+        $ze_tl = json_decode($ze_tl);
 
-        $this->short_urls[] = $fon_gs;
+        $this->short_urls[] = $ze_tl->url;
     }
 
     public function main()
@@ -124,16 +111,14 @@ class Multishort
         {
             $long_url = $_POST['uri'];
 
-            $this->tiny_cc($long_url);
-            $this->is_gd($long_url);
-            $this->xrl_us($long_url);
-            $this->alturl_com($long_url);
-            $this->xr_com($long_url);
-            $this->to_ly($long_url);
-            $this->url_ie($long_url);
-            $this->moourl_com($long_url);
-            $this->snipr_com($long_url);
-            $this->fon_gs($long_url);
+            //$this->tiny_cc($long_url);
+            //$this->is_gd($long_url);
+            //$this->alturl_com($long_url);
+            //$this->to_ly($long_url);
+            //$this->url_ie($long_url);
+            //$this->moourl_com($long_url);
+            //$this->snipr_com($long_url);
+            $this->ze_tl();
 
             return $this->show_form = FALSE;
         }
