@@ -103,10 +103,16 @@ class Multishort
 
     public function tinyy_me($url='http://brandonkprobst.com')
     {
-        $url = 'http://reddit.com';
         $tinyy_me = file_get_contents('http://tinyy.me/api.php?url='.$url);
 
         $this->short_urls[] = $tinyy_me;
+    }
+
+    public function shrinkr_me($url='http://brandonkprobst.com')
+    {
+        $shrinkr_me = file_get_contents('http://shrinkr.me/api.php?url='.$url);
+
+        $this->short_urls[] = $shrinkr_me;
     }
 
     public function main()
@@ -119,15 +125,16 @@ class Multishort
         {
             $long_url = $_POST['uri'];
 
-            //$this->tiny_cc($long_url);
-            //$this->is_gd($long_url);
-            //$this->alturl_com($long_url);
-            //$this->to_ly($long_url);
-            //$this->url_ie($long_url);
-            //$this->moourl_com($long_url);
-            //$this->snipr_com($long_url);
-            //$this->ze_tl($long_url);
-            //$this->tinyy_me($long_url);
+            $this->tiny_cc($long_url);
+            $this->is_gd($long_url);
+            $this->alturl_com($long_url);
+            $this->to_ly($long_url);
+            $this->url_ie($long_url);
+            $this->moourl_com($long_url);
+            $this->snipr_com($long_url);
+            $this->ze_tl($long_url);
+            $this->tinyy_me($long_url);
+            $this->shrinkr_me($longurl);
 
             return $this->show_form = FALSE;
         }
