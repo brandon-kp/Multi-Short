@@ -115,6 +115,23 @@ class Multishort
         $this->short_urls[] = $shrinkr_me;
     }
 
+    public function lnk_in($url='http://brandonkprobst.com')
+    {
+        $lnk_in = file_get_contents('http://lnk.in/remote.php?url='.$url);
+
+        if(preg_match_all("/(id)(=)(\"divMessageBox\")(>).*?((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s\"]*))/is", $lnk_in, $matches))
+        {
+            $this->short_urls[] = $matches[5][0];
+        }
+    }
+
+    public function bit_ly($url='http://brandonkprobst.com')
+    {
+        $bit_ly = file_get_contents('http://api.bit.ly/shorten?version=2.0.1&longUrl='.$url.'&login=d0pus&apiKey=R_1b7ef98c4c59295606a0efe1a0bb217c&format=json');
+        $bit_ly = json_decode($bit_ly,true);
+        $this->short_urls[] = $bit_ly['results'][$url]['shortUrl'];
+    }
+
     public function main()
     {
         if(count($_POST)<1)
@@ -135,6 +152,8 @@ class Multishort
             $this->ze_tl($long_url);
             $this->tinyy_me($long_url);
             $this->shrinkr_me($longurl);
+            $this->lnk_in($longurl);
+            $this->bit_ly($longurl);
 
             return $this->show_form = FALSE;
         }
