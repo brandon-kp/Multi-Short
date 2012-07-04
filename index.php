@@ -134,7 +134,7 @@ class Multishort
 
     public function main()
     {
-        if(count($_POST)<1)
+        if(count($_POST) < 1)
         {
             return $this->show_form = TRUE;
         }
